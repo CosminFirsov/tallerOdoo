@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+	<menuitem name="Taller" id="taller_menu"/>
+	<menuitem name="Propietarios" id="taller_propietarios_menu" parent="taller_menu"
+	action="action_taller_propietarios_form"/>
+	<record model="ir.actions.act_window" id="action_taller_propietarios_form">
+		<field name="name">taller_propietarios</field>
+		<field name="res_model">taller.propietarios</field>
+	</record>
+	
+	
+	
+	<record model="ir.ui.view" id="taller_propietarios_tree_view">
+		<field name="name">taller.propietarios.tree</field>
+		<field name="model">taller.propietarios</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Propietarios">
+				<field name="name"/>
+				<field name="telefono"/>
+				<field name="direccion"/>		
+			</tree>
+		</field>
+	</record>
+	<record model ="ir.ui.view" id="taller_propietarios_form_view">
+		<field name="name">taller.propietarios.form</field>
+		<field name="model">taller.propietarios</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Propietarios">
+				<field name="name"/>
+				<field name="telefono"/>
+				<field name="direccion" colspan="4"/>
+				<newline/>
+				<field name="coches" widget="one2many_list" colspan="4" readonly="1"/>
+			</form>
+		</field>
+	</record>
+	<record model="ir.actions.act_window" id="action_taller_coches_form">
+		<field name="name">taller_coches</field>
+		<field name="res_model">taller.coches</field>
+		<field name="view_model">tree,form,graph</field>
+	</record>
+	
+	<menuitem name="Coches" icon="terp-project" id="taller_coches_menu" parent="taller_menu" action="action_taller_coches_form"/>
+	
+	<record model="ir.ui.view" id="taller_coches_graph_view">
+		<field name="name">taller.coches.graph</field>
+		<field name="model">taller.coches</field>
+		<field name="type">graph</field>
+		<field name="arch" type="xml">
+			<graph string="Vehiculos" type="bar">
+				<field name="tipo"/>
+				<field name="puertas"/>
+			</graph>
+		</field>
+	</record>
+	<record model="ir.ui.view" id="taller_coches_search_view">
+		<field name="name">taller.coches.search</field>
+		<field name="model">taller.coches</field>
+		<field name="type">search</field>
+		<field name="arch" type="xml">
+			<search string="Vehiculos">
+				<group colspan="4">
+					<field name="matricula"/>
+					<field name="propietario"/>
+					<field name="marca"/>
+				</group>
+				<newline/>
+				<filter string="Propietario" icon="terp-project" domain="[]" context="{'group_by':'propietario'}"/>
+				<field string="Marca" icon="terp-project" domain="[]" context="{'group_by':'marca'}"/>
+			</search>
+		</field>
+	</record>
+	<record model="ir.ui.view" id="taller_coches_tree_view">
+		<field name="name">taller.coches.tree</field>
+		<field name="model">taller.coches</field>
+		<field name="type">tree</field>
+		<field name="view_model">graph,tree</field>
+		<field name="arch" type="xml">
+			<tree string="Vehiculo">
+				<field name="matricula"/>
+				<field name="propietario"/>
+				<field name="marca"/>
+				<field name="modelo"/>
+				<field name="puertas"/>
+			</tree>
+		</field>
+	</record>
+	<record model="ir.ui.view" id="taller_coches_form_view">
+		<field name="name">taller.coches.form</field>
+		<field name="model">taller.coches</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Vehiculos">
+				<field name="propietario" colspan="4" required="1"/>
+				<separator string="Datos del vehiculo" colspan="4"/>
+				<field name="matricula"/>
+				<newline/>
+				<fiel name="marca"/>
+				<field name="modelo"/>
+				
+				<notebook colspan="4">
+					<page string="Caracteristicas">
+						<field name="tipo" required="1"/>
+						<group string="Longitudes" rowspan="4" colspan="2">
+							<field name="longitud"/>
+							<field name="anchura"/>
+							<field name="altura"/>
+							<field name="capacidad"/>
+						</group>
+						<field name="color"/>
+						<newline/>
+						<field name="puertas"/>
+					</page>
+					
+					<page string="Motor">
+						<field name="fecmat"/>
+						<field name="kilometraje"/>
+						<field name="numbastidor"/>
+							<field name="cilindrada"/>
+							<field name="numcilindros"/>
+							<field name="potencia"/>
+							<field name="potenciafiscal"/>
+						<field name="combustible"/>
+						<field name="gastomedio"/>
+						<field name="velocidad"/>
+					</page>
+					
+					<page string="Comentarios">
+						<field name="comentarios"/>
+					</page>
+				</notebook>
+			</form>
+		</field>
+	</record>
+	</data>
+</openerp>
